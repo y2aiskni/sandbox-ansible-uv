@@ -1,0 +1,26 @@
+---
+- name: Update web servers
+  hosts: localhost
+
+  tasks:
+    - name: Upload test file
+      amazon.aws.s3_object:
+        endpoint_url: "{{ AWS_S3_ENDPOINT }}"
+        region: "{{ AWS_S3_REGION }}"
+        bucket: "{{ AWS_S3_BUCKET }}"
+        object: test/hoge.txt
+        src: ./test.txt
+        mode: put
+        access_key: "{{ AWS_S3_ACCESS_KEY }}"
+        secret_key: "{{ AWS_S3_SECRET_KEY }}"
+
+    - name: Download test file
+      amazon.aws.s3_object:
+        endpoint_url: "{{ AWS_S3_ENDPOINT }}"
+        region: "{{ AWS_S3_REGION }}"
+        bucket: "{{ AWS_S3_BUCKET }}"
+        object: test/hoge.txt
+        dest: ./foo.txt
+        mode: get
+        access_key: "{{ AWS_S3_ACCESS_KEY }}"
+        secret_key: "{{ AWS_S3_SECRET_KEY }}"
